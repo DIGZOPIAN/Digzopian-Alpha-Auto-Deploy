@@ -1,31 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Digzopian Alpha Control</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { background: #000; color: #0f0; font-family: monospace; padding: 20px; }
-    textarea, button { width: 100%; padding: 10px; margin-top: 10px; background: #111; color: #0f0; border: 1px solid #0f0; }
-  </style>
+  <title>Digzopian Alpha Trigger</title>
 </head>
 <body>
-  <h1>🤖 Digzopian Alpha Panel</h1>
-  <textarea id="cmd" rows="6" placeholder="Type your command here..."></textarea>
-  <button onclick="send()">Execute</button>
-  <pre id="out">Waiting for command...</pre>
-<script>
-function send() {
-  const cmd = document.getElementById("cmd").value;
-  document.getElementById("out").textContent = "⏳ Sending...";
-  fetch("https://YOUR_BACKEND_URL/api/execute", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ cmd })
-  })
-  .then(res => res.json())
-  .then(data => document.getElementById("out").textContent = JSON.stringify(data, null, 2))
-  .catch(err => document.getElementById("out").textContent = "⚠️ Error: " + err);
-}
-</script>
+  <h1>Trigger Flashloan</h1>
+  <button onclick="sendFlashloan()">Send</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    async function sendFlashloan() {
+      const res = await fetch("/api/flashloan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ test: "alpha_test" })
+      });
+
+      const data = await res.json();
+      document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
 </body>
 </html>
